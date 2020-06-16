@@ -1,14 +1,15 @@
 import cv2
+import os
 
-output_folder = "raw_images/"
+output_folder = "../../data/raw/raw_images/"
 
 # Capture frames from webcam video
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 if not cap.isOpened():
-    raise IOError("Cannot open webcam")
+    raise IOError("Webcam not detected!")
 
 # Reads and starts the new image count from said number
-with open("start_from.txt", "r") as f:
+with open("img_counter.txt", "r") as f:
     img_count = int(f.readline())
 
 while True:
@@ -18,10 +19,10 @@ while True:
     key = cv2.waitKey(1)
     cv2.imshow('', frame)
 
-    with open("start_from.txt", "w") as f:
+    with open("img_counter.txt", "w") as f:
         f.write(str(img_count))
 
-    if key == 32:  # 32 is space key
+    if key == 32:  # press space bar to end the script
         break
 
 cap.release()
